@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="main.css">
+    <title>Carousel using HTML, CSS, and JavaScript</title>
+</head>
+<body>
+    <div class="carousel-container">
+        <div class="carousel-item">
+            <img src="images/carousel-image-8.jpg" id="lastClone" alt="">
+            <img src="images/carousel-image-1.jpg" alt="">
+            <img src="images/carousel-image-2.jpg" alt="">
+            <img src="images/carousel-image-3.jpg" alt="">
+            <img src="images/carousel-image-4.jpg" alt="">
+            <img src="images/carousel-image-5.jpg" alt="">
+            <img src="images/carousel-image-6.jpg" alt="">
+            <img src="images/carousel-image-7.jpg" alt="">
+            <img src="images/carousel-image-8.jpg" alt="">
+            <img src="images/carousel-image-1.jpg" id="firstClone" alt="">
+        </div>
+        <div class="dots-container" style="text-align:center">
+            <span class="dot" onclick="highlightDot(1)"></span> 
+            <span class="dot" onclick="highlightDot(2)"></span> 
+            <span class="dot" onclick="highlightDot(3)"></span>
+            <span class="dot" onclick="highlightDot(4)"></span> 
+            <span class="dot" onclick="highlightDot(5)"></span> 
+            <span class="dot" onclick="highlightDot(6)"></span> 
+            <span class="dot" onclick="highlightDot(7)"></span> 
+            <span class="dot" onclick="highlightDot(8)"></span> 
+        </div>
+
+        <a class="prev">&#10094;</a>
+        <a class="next">&#10095;</a>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
