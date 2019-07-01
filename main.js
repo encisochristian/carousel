@@ -5,6 +5,7 @@ const prevBtn = document.querySelector('.prev');
 const nextBtn = document.querySelector('.next');
 
 const dots = document.querySelectorAll('.dots-container .dot');
+const dotsLength = dots.length;
 
 let counter = 1;
 const size = carouselImages[0].clientWidth;
@@ -12,76 +13,53 @@ const size = carouselImages[0].clientWidth;
 dots[0].className += " active";
 carouselSlide.style.transform = 'translate(' + (-size * counter ) + 'px';
 
+function slideImage(num, trans) {
+    carouselSlide.style.transition = trans;
+    carouselSlide.style.transform = 'translate(' + (-size * num ) + 'px';
+}
+
+function highlightDot(n) {
+    for (i = 0; i < dotsLength; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    dots[n].className += " active";
+}
+
+function slideByDot(n) {
+    slideImage(n, "transform 0.4s ease-in-out");
+    highlightDot(n - 1);
+    counter = n;
+}
+
+
 nextBtn.addEventListener('click', function() {
     if(counter >= carouselImages.length - 1) return;
-    carouselSlide.style.transition = "transform 0.4s ease-in-out";
-
-    if (counter < dots.length) {
-        for (let i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        dots[counter].className += " active";
+    if (counter < dotsLength) {
+        highlightDot(counter);
     }
-
     counter++;
-    carouselSlide.style.transform = 'translate(' + (-size * counter ) + 'px';
-    console.log(counter);
+    slideImage(counter, "transform 0.4s ease-in-out");
 });
 
 prevBtn.addEventListener('click', function() {
     if(counter <= 0) return;
-    carouselSlide.style.transition = "transform 0.4s ease-in-out";
-
-    for (let i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-
     if (counter > 1){
-        dots[counter - 2].className += " active";
+        highlightDot(counter - 2);
     }
     counter--;
-
-    carouselSlide.style.transform = 'translate(' + (-size * counter ) + 'px';
-    console.log(counter);
-    
+    slideImage(counter, "transform 0.4s ease-in-out"); 
 });
 
 carouselSlide.addEventListener('transitionend', function() {
     if (carouselImages[counter].id === 'lastClone') {
-
-        carouselSlide.style.transition = 'none';
         counter = carouselImages.length - 2;
-        carouselSlide.style.transform = 'translate(' + (-size * counter ) + 'px';
-
-        for (let i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        dots[counter - 1].className += " active";
-        console.log(counter);
+        slideImage(counter, "none");
+        highlightDot(counter - 1);
     }
 
     if (carouselImages[counter].id === 'firstClone') {
-        carouselSlide.style.transition = 'none';
         counter = carouselImages.length - counter;
-        carouselSlide.style.transform = 'translate(' + (-size * counter ) + 'px';
-
-        for (let i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        dots[0].className += " active";
-
-        console.log(counter);
+        slideImage(counter, "none");
+        highlightDot(0);
     }
-}); 
-
-function highlightDot(n) {
-    carouselSlide.style.transition = "transform 0.4s ease-in-out";
-    carouselSlide.style.transform = 'translate(' + (-size * n ) + 'px';
-
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    dots[n - 1].className += " active";
-
-    counter = n;
-}
+});
