@@ -19,7 +19,7 @@
     height: 510px;
   }
 }
-.prev {
+.prev, .next {
   position: absolute;
   top: 50%;
   width: auto;
@@ -38,13 +38,9 @@
 }
 
 .next {
-  @extend .prev;
   right: 0;
   border-radius: 3px 0 0 3px;
-  &:hover {
-    background-color: rgba(0,0,0,0.8);    
-  }
-} 
+}
 .dots-container{
   padding: 25px 0px 15px 0px;
   background-color: #811112;

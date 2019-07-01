@@ -34,8 +34,6 @@
 .next {
   right: 0;
   border-radius: 3px 0 0 3px; }
-  .next:hover {
-    background-color: rgba(0, 0, 0, 0.8); }
 
 .dots-container {
   padding: 25px 0px 15px 0px;
