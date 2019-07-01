@@ -1,20 +1,68 @@
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-.carousel-container {
+  }
+  
+.carousel {
+  &-container {
     position: relative;
     width: 60%;
     margin: auto;
-    border: 5px solid black;
     overflow: hidden;
-}
-
-.carousel-slide {
-    position: absolute;
+    border: 5px solid #811112;
+    border-radius: 2px;
+  }
+  &-item {
     display: flex;
     width: 100%;
-    height: 500px;
+    height: 510px;
+  }
 }
+.prev {
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  transition: 0.6s ease;
+  color: white;
+  border-radius: 0 3px 3px 0;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    background-color: rgba(0,0,0,0.8);    
+  }
+}
+
+.next {
+  @extend .prev;
+  right: 0;
+  border-radius: 3px 0 0 3px;
+  &:hover {
+    background-color: rgba(0,0,0,0.8);    
+  }
+} 
+.dots-container{
+  padding: 25px 0px 15px 0px;
+  background-color: #811112;
+}
+  
+.dot {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin: 0 2px;
+  border-radius: 50%;
+  transition: background-color 0.6s ease;
+  background-color: #fff;
+  cursor: pointer;
+  &:hover {
+    background-color: #ac3834;
+  }
+}
+.active {
+  @extend .dot:hover;
+}  
