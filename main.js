@@ -1,24 +1,62 @@
-const carouselSlide = document.querySelector('.carousel-item');
-const carouselImages = document.querySelectorAll('.carousel-item img');
-
+let index = 0, timer;
+const carouselImages = document.getElementsByClassName('image-container');
+const carouselLength = carouselImages.length;
 const prevBtn = document.querySelector('.prev');
 const nextBtn = document.querySelector('.next');
-
 const dots = document.querySelectorAll('.dots-container .dot');
 const dotsLength = dots.length;
-
-let timer;
-
-let counter = 1;
-const size = carouselImages[0].clientWidth;//816
-
+carouselImages[index].style.opacity=1;
 dots[0].className += " active";
-carouselSlide.style.transform = 'translate(' + ( -size * counter ) + 'px';
 
-function slideImage(num, trans) {
-    carouselSlide.style.transition = trans;
-    carouselSlide.style.transform = 'translate(' + (-size * num ) + 'px';
+function autoSlide() {
+    let n = index + 1;
+    moveSlide(n);
 }
+
+window.addEventListener('load', function() {
+    timer = setInterval(autoSlide, 3000);
+});
+
+function moveSlide(n) {
+    clearInterval(timer);
+    let i, current, next, classForCurrent, classForNext;
+
+    if (n > index) {
+        if(n >= carouselLength){n = 0;}
+        classForCurrent = " move-left-current";
+        classForNext = " move-left-next";
+    } else if (n < index) {
+        if(n < 0){n = carouselLength - 1;}
+        classForCurrent = " move-right-current";
+        classForNext = " move-right-prev";
+    }
+
+    if (n != index) {
+        next = carouselImages[n];
+        current = carouselImages[index];
+
+        for (i = 0; i < carouselLength; i++) {
+            carouselImages[i].className = "image-container";
+            carouselImages[i].style.opacity = 0;
+        }
+        current.className += classForCurrent;
+        next.className += classForNext;
+        highlightDot(n);
+
+        index = n;
+        timer = setInterval(autoSlide, 3000);
+    }
+}
+
+nextBtn.addEventListener('click', function() {
+    let n = index + 1;
+    moveSlide(n);
+});
+
+prevBtn.addEventListener('click', function() {
+    let n = index + -1;
+    moveSlide(n);
+});
 
 function highlightDot(n) {
     for (i = 0; i < dotsLength; i++) {
@@ -26,60 +64,3 @@ function highlightDot(n) {
     }
     dots[n].className += " active";
 }
-
-function slideByDot(n) {
-    clearInterval(timer);
-    slideImage(n, "transform 0.4s ease-in-out");
-    highlightDot(n - 1);
-    counter = n;
-    timer = setInterval(autoSlide, 3000);
-}
-
-function autoSlide() {
-    if(counter >= carouselImages.length - 1) return;
-    if (counter < dotsLength) {
-        highlightDot(counter);
-    }
-    counter++;
-    slideImage(counter, "transform 0.4s ease-in-out");
-}
-
-window.addEventListener('load', function() {
-    timer = setInterval(autoSlide, 3000);
-});
-
-nextBtn.addEventListener('click', function() {
-    clearInterval(timer);
-    if(counter >= carouselImages.length - 1) return;
-    if (counter < dotsLength) {
-        highlightDot(counter);
-    }
-    counter++;
-    slideImage(counter, "transform 0.4s ease-in-out");
-    timer = setInterval(autoSlide, 3000);
-});
-
-prevBtn.addEventListener('click', function() {
-    clearInterval(timer);
-    if(counter <= 0) return;
-    if (counter > 1){
-        highlightDot(counter - 2);
-    }
-    counter--;
-    slideImage(counter, "transform 0.4s ease-in-out");
-    timer = setInterval(autoSlide, 3000);
-});
-
-carouselSlide.addEventListener('transitionend', function() {
-    if (carouselImages[counter].id === 'lastClone') {
-        counter = carouselImages.length - 2;
-        slideImage(counter, "none");
-        highlightDot(counter - 1);
-    }
-
-    if (carouselImages[counter].id === 'firstClone') {
-        counter = carouselImages.length - counter;
-        slideImage(counter, "none");
-        highlightDot(0);
-    }
-});
